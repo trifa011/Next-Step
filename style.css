@@ -1,6 +1,4 @@
-/* =========================
-   GENERAL
-========================= */
+
 
 * {
     margin: 0;
@@ -47,10 +45,6 @@ body {
     border: none;
     cursor: pointer;
 }
-
-
-
-
 
 
 
@@ -400,6 +394,8 @@ footer p {
     .statistics-content {
         grid-template-columns: 1fr 1fr;
     }
+
+
 
     .footer-content {
         flex-direction: column;

@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NextStep - Find Jobs</title>
+
+<style>
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: Georgia, "Times New Roman", serif; color: #202622; background: #f7f5ef; }
+
+.navbar { height: 82px; border-bottom: 1px solid #dedbd2; display: flex; align-items: center; padding: 0 8vw; gap: 40px; background: #f8f6f0; }
+.logo { font-size: 28px; font-weight: bold; text-decoration: none; letter-spacing: -1px; color: #202622; }
+nav { display: flex; gap: 28px; }
+nav a { color: #3d403d; text-decoration: none; font-size: 14px; }
+nav a.active { color: #b95736; }
+.nav-actions { display: flex; gap: 13px; align-items: center; margin-left: auto; }
+.login { border: 0; background: none; font: 13px Georgia; cursor: pointer; }
+.get-started { border: 0; background: #b95736; color: white; border-radius: 5px; padding: 12px 20px; font: 13px Georgia; cursor: pointer; }
+
+.jobs-hero { padding: 60px 8vw; background: #eeece4; border-bottom: 1px solid #ddd9d0; }
+.eyebrow { font-size: 12px; letter-spacing: 1.5px; color: #6d746d; font-weight: bold; margin-bottom: 15px; }
+.jobs-hero h1 { font-size: 48px; line-height: 1.05; margin-bottom: 15px; }
+.jobs-hero h1 em { font-weight: normal; font-style: normal; color: #b95736; }
+.hero-text { font-size: 15px; color: #656861; max-width: 590px; margin-bottom: 25px; }
+
+.search-box { display: flex; max-width: 900px; background: white; border: 1px solid #d6d3cb; border-radius: 7px; padding: 7px; box-shadow: 0 7px 20px #25372a12; }
+.search-field { display: flex; align-items: center; gap: 10px; padding: 7px 14px; flex: 1; border-right: 1px solid #ddd9d0; }
+.search-field span { font-family: Arial; font-size: 20px; color: #b95736; }
+.search-field input { border: 0; outline: 0; width: 100%; font: 14px Georgia; background: transparent; }
+.search-box button { margin-left: 7px; border: 0; background: #b95736; color: white; border-radius: 5px; padding: 12px 20px; font: 13px Georgia; cursor: pointer; }
+
+.jobs-section { padding: 50px 8vw 70px; }
+.section-top { display: flex; justify-content: space-between; align-items: end; margin-bottom: 25px; }
+.section-top h2 { font-size: 28px; }
+select { border: 1px solid #d4d1c8; background: white; border-radius: 4px; padding: 10px 12px; font: 14px Georgia; }
+
+.jobs-layout { display: grid; grid-template-columns: 200px 1fr; gap: 35px; }
+
+.filters { border-right: 1px solid #ddd9d0; padding-right: 25px; }
+.filters h3 { font-size: 18px; margin-bottom: 20px; }
+.filters label:not(.check) { display: block; font-size: 12px; letter-spacing: .8px; text-transform: uppercase; font-weight: bold; color: #73766f; margin: 20px 0 10px; }
+.check { display: block; font-size: 14px; margin: 10px 0; color: #50534e; }
+.check input { accent-color: #b95736; margin-right: 8px; }
+.filters select { width: 100%; }
+.clear { border: 0; background: none; color: #b95736; margin-top: 20px; padding: 0; font: 13px Georgia; cursor: pointer; }
+
+.job-list { display: grid; gap: 15px; }
+.job-card { background: white; border: 1px solid #dedbd3; border-radius: 6px; padding: 22px 24px; display: grid; grid-template-columns: 1fr auto; gap: 15px; transition: .2s; }
+.job-card:hover { transform: translateY(-2px); box-shadow: 0 8px 20px #26382c12; }
+.company { font-size: 13px; color: #777b73; margin-bottom: 6px; }
+.job-card h3 { font-size: 20px; margin-bottom: 10px; }
+.meta { display: flex; flex-wrap: wrap; gap: 8px 18px; color: #666a63; font-size: 13px; }
+.tag { display: inline-block; margin-top: 12px; padding: 5px 9px; background: #eef1ec; color: #3e5848; border-radius: 3px; font-size: 11px; }
+
+.job-side { text-align: right; display: flex; flex-direction: column; justify-content: space-between; align-items: end; }
+.salary { font-size: 14px; color: #3e5848; font-weight: bold; }
+.view-btn { border: 1px solid #c9c6be; background: #faf9f5; border-radius: 4px; padding: 9px 13px; color: #a84f31; font: 13px Georgia; cursor: pointer; }
+
+.empty { text-align: center; padding: 50px; color: #777; background: white; border: 1px dashed #ccc; }
+
+.modal { display: none; position: fixed; inset: 0; background: #18231dcc; align-items: center; justify-content: center; padding: 20px; }
+.modal.show { display: flex; }
+.modal-card { background: #f9f7f1; max-width: 600px; width: 100%; max-height: 85vh; overflow: auto; padding: 35px; border-radius: 7px; position: relative; }
+.close { position: absolute; right: 18px; top: 12px; border: 0; background: none; font-size: 26px; color: #555; cursor: pointer; }
+.modal-card h2 { font-size: 28px; margin: 8px 0; }
+.modal-card h4 { margin: 20px 0 6px; color: #b95736; }
+.modal-card p { line-height: 1.6; color: #555; }
+.apply { margin-top: 20px; border: 0; background: #b95736; color: white; padding: 12px 22px; border-radius: 4px; font: 13px Georgia; cursor: pointer; }
+
+@media (max-width: 800px) {
+  nav { display: none; }
+  .jobs-layout { grid-template-columns: 1fr; }
+  .filters { border-right: 0; border-bottom: 1px solid #ddd; padding: 0 0 20px; }
+  .search-box { flex-direction: column; }
+  .search-field { border-right: 0; border-bottom: 1px solid #ddd; }
+}
+@media (max-width: 550px) {
+  .section-top { display: block; }
+  .section-top select { margin-top: 15px; }
+  .job-card { grid-template-columns: 1fr; }
+  .job-side { align-items: start; text-align: left; gap: 15px; }
+}
+</style>
+</head>
+
+
+<body>
+
+<header class="navbar">
+  <a href="index.html" class="logo">NextStep</a>
+  <nav>
+    
+    <a href="jobs.html" class="active">Find Jobs</a>
+  </nav>
+  
+</header>
+
+<main>
+  <section class="jobs-hero">
+    <p class="eyebrow">YOUR NEXT OPPORTUNITY</p>
+    <h1>Find a job that<br><em>moves you forward.</em></h1>
+    <p class="hero-text">Explore jobs from companies looking for people like you. Search, filter and find your next step.</p>
+    <div class="search-box">
+      <div class="search-field"><span>⌕</span><input type="text" id="searchInput" placeholder="Job title, skill or keyword"></div>
+      <div class="search-field"><span>⌖</span><input type="text" id="locationInput" placeholder="City or location"></div>
+      <button id="searchBtn">Search jobs</button>
+    </div>
+  </section>
+
+  <section class="jobs-section">
+    <div class="section-top">
+      <div>
+        <p class="eyebrow">OPEN OPPORTUNITIES</p>
+        <h2><span id="jobCount">0</span> jobs waiting for you</h2>
+      </div>
+      <select id="sortSelect">
+        <option value="recent">Most recent</option>
+        <option value="salary">Salary: high to low</option>
+      </select>
+    </div>
+
+    <div class="jobs-layout">
+      <aside class="filters">
+        <h3>Filter jobs</h3>
+        <label>Job type</label>
+        <label class="check"><input type="checkbox" value="Full-time" class="type-filter"> Full-time</label>
+        <label class="check"><input type="checkbox" value="Part-time" class="type-filter"> Part-time</label>
+        <label class="check"><input type="checkbox" value="Remote" class="type-filter"> Remote</label>
+        <label class="check"><input type="checkbox" value="Internship" class="type-filter"> Internship</label>
+        <label>Experience</label>
+        <select id="experienceFilter">
+          <option value="all">Any experience</option>
+          <option value="Entry level">Entry level</option>
+          <option value="Mid level">Mid level</option>
+        </select>
+        <button id="clearFilters" class="clear">Clear filters</button>
+      </aside>
+
+      <section class="job-list" id="jobList"></section>
+    </div>
+  </section>
+</main>
+
+<div class="modal" id="jobModal">
+  <div class="modal-card">
+    <button class="close" id="closeModal">&times;</button>
+    <div id="modalContent"></div>
+  </div>
+</div>
+
+<script>
+const jobs = [
+  { title: "Junior Frontend Developer", company: "Northstar Digital", location: "Erbil, Iraq", type: "Full-time", experience: "Entry level", salary: "$700–$1,000 / month", description: "Build responsive interfaces and work with the product team to create simple, useful web experiences.", skills: "HTML, CSS, JavaScript" },
+  { title: "UI/UX Design Intern", company: "Korek Labs", location: "Erbil, Iraq", type: "Internship", experience: "Entry level", salary: "Paid internship", description: "Support designers with wireframes, prototypes and user research for digital products.", skills: "Figma, UI design, research" },
+  { title: "Backend Developer", company: "Rojava Tech", location: "Erbil, Iraq", type: "Full-time", experience: "Mid level", salary: "$1,200–$1,700 / month", description: "Develop APIs and database services while collaborating with frontend developers.", skills: "PHP, Laravel, MySQL" },
+  { title: "Content & Social Media Assistant", company: "Mira Creative", location: "Remote", type: "Remote", experience: "Entry level", salary: "$500–$800 / month", description: "Create content, organize social media posts and help grow a young creative brand.", skills: "Writing, social media, Canva" },
+  { title: "Junior Java Developer", company: "Future Systems", location: "Sulaymaniyah, Iraq", type: "Full-time", experience: "Entry level", salary: "$800–$1,200 / month", description: "Work with the development team to maintain Java applications and learn modern backend practices.", skills: "Java, SQL, Git" },
+  { title: "Marketing Assistant", company: "Seven Hills", location: "Erbil, Iraq", type: "Part-time", experience: "Entry level", salary: "$400–$600 / month", description: "Help the marketing team with campaigns, research and day-to-day communication.", skills: "Marketing, Excel, communication" }
+];
+
+const list = document.getElementById("jobList");
+const count = document.getElementById("jobCount");
+const search = document.getElementById("searchInput");
+const locationInput = document.getElementById("locationInput");
+const experience = document.getElementById("experienceFilter");
+const sort = document.getElementById("sortSelect");
+const modal = document.getElementById("jobModal");
+const modalContent = document.getElementById("modalContent");
+
+function renderJobs() {
+  const term = search.value.toLowerCase().trim();
+  const location = locationInput.value.toLowerCase().trim();
+  const selectedTypes = [...document.querySelectorAll(".type-filter:checked")].map(i => i.value);
+
+  let result = jobs.filter(job => {
+    const jobText = `${job.title} ${job.company} ${job.skills}`.toLowerCase();
+    const jobLocation = job.location.toLowerCase();
+    const matchesSearch = !term || jobText.includes(term);
+    const matchesLocation = !location || jobLocation.includes(location);
+    const matchesType = selectedTypes.length === 0 || selectedTypes.includes(job.type);
+    const matchesExperience = experience.value === "all" || job.experience === experience.value;
+    return matchesSearch && matchesLocation && matchesType && matchesExperience;
+  });
+
+  if (sort.value === "salary") {
+    result.sort((a, b) => b.salary.length - a.salary.length);
+  }
+
+  count.textContent = result.length;
+
+  if (result.length === 0) {
+    list.innerHTML = `<div class="empty"><h3>No jobs found</h3><p>Try changing your search or filters.</p></div>`;
+    return;
+  }
+
+  list.innerHTML = result.map(job => {
+    const index = jobs.indexOf(job);
+    return `
+      <article class="job-card">
+        <div>
+          <p class="company">${job.company}</p>
+          <h3>${job.title}</h3>
+          <div class="meta">
+            <span>⌖ ${job.location}</span>
+            <span>◷ ${job.type}</span>
+            <span>${job.experience}</span>
+          </div>
+          <span class="tag">${job.skills}</span>
+        </div>
+        <div class="job-side">
+          <span class="salary">${job.salary}</span>
+          <button class="view-btn" onclick="showJob(${index})">View job →</button>
+        </div>
+      </article>
+    `;
+  }).join("");
+}
+
+function showJob(index) {
+  const job = jobs[index];
+  modalContent.innerHTML = `
+    <p class="eyebrow">${job.company}</p>
+    <h2>${job.title}</h2>
+    <p>${job.location} · ${job.type} · ${job.experience}</p>
+    <h4>About the role</h4>
+    <p>${job.description}</p>
+    <h4>Skills</h4>
+    <p>${job.skills}</p>
+    <button class="apply" onclick="applyJob()">Apply now</button>
+  `;
+  modal.classList.add("show");
+}
+
+function applyJob() {
+  alert("Application feature can be connected to your backend later.");
+}
+
+document.getElementById("closeModal").onclick = () => modal.classList.remove("show");
+modal.onclick = (e) => { if (e.target === modal) modal.classList.remove("show"); };
+
+document.getElementById("searchBtn").onclick = renderJobs;
+
+document.getElementById("clearFilters").onclick = () => {
+  search.value = "";
+  locationInput.value = "";
+  experience.value = "all";
+  document.querySelectorAll(".type-filter").forEach(i => i.checked = false);
+  renderJobs();
+};
+
+search.addEventListener("input", renderJobs);
+locationInput.addEventListener("input", renderJobs);
+experience.addEventListener("input", renderJobs);
+sort.addEventListener("input", renderJobs);
+document.querySelectorAll(".type-filter").forEach(i => i.addEventListener("change", renderJobs));
+
+renderJobs();
+</script>
+
+</body>
+</html>

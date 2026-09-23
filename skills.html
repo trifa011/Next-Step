@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NextStep - Find Skills</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { font-family: Arial, Helvetica, sans-serif; background: #f8fafc; color: #172033; line-height: 1.6; }
+button { border: none; cursor: pointer; font-family: inherit; }
+
+/* HEADER */
+header { width: 100%; padding: 20px 8%; display: flex; justify-content: space-between; align-items: center; background: #fff; border-bottom: 1px solid #e5e7eb; position: sticky; top: 0; z-index: 1000; }
+.logo { font-size: 25px; font-weight: 800; color: #2563eb; }
+nav { display: flex; gap: 28px; }
+nav a { text-decoration: none; color: #475569; font-size: 15px; font-weight: 600; transition: .3s; }
+nav a:hover { color: #2563eb; }
+
+/* HERO */
+.hero { min-height: 500px; display: flex; align-items: center; padding: 80px 8%; background: linear-gradient(135deg, #eff6ff, #ffffff); }
+.hero-content { max-width: 700px; }
+.hero-tag { display: inline-block; margin-bottom: 20px; font-size: 13px; font-weight: 700; letter-spacing: 2px; color: #2563eb; }
+.hero h1 { font-size: clamp(38px, 6vw, 64px); line-height: 1.1; margin-bottom: 20px; color: #0f172a; }
+.hero p { max-width: 600px; font-size: 17px; color: #64748b; margin-bottom: 30px; }
+.hero button, .cta button { padding: 14px 26px; border-radius: 8px; background: #2563eb; color: #fff; font-size: 16px; font-weight: 700; transition: .3s; }
+.hero button:hover, .cta button:hover { background: #1d4ed8; transform: translateY(-2px); }
+
+/* SECTION TITLE */
+.section-title { text-align: center; max-width: 680px; margin: 0 auto 45px; }
+.section-title span { font-size: 12px; font-weight: 800; letter-spacing: 2px; color: #2563eb; }
+.section-title h2 { font-size: 32px; margin: 10px 0; color: #0f172a; }
+.section-title p { color: #64748b; }
+
+/* CATEGORIES */
+.categories { padding: 80px 8%; background: #fff; }
+.category-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.category-card { padding: 30px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px; transition: .3s; }
+.category-card:hover { transform: translateY(-6px); border-color: #93c5fd; }
+.category-icon { font-size: 32px; margin-bottom: 15px; }
+.category-card h3 { font-size: 20px; margin-bottom: 10px; }
+.category-card p { color: #64748b; margin-bottom: 20px; }
+.category-btn { padding: 10px 18px; border-radius: 6px; background: #e0edff; color: #2563eb; font-weight: 700; }
+.category-btn:hover, .category-btn.active { background: #2563eb; color: #fff; }
+
+#categoryResult { max-width: 1000px; margin: 40px auto 0; padding: 30px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 16px; color: #64748b; }
+.category-result-header { text-align: center; margin-bottom: 25px; }
+.category-result-header span { font-size: 12px; font-weight: 800; letter-spacing: 2px; color: #2563eb; }
+.category-result-header h3 { margin-top: 8px; font-size: 26px; color: #0f172a; }
+.category-skills { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+.category-skill { display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 16px 18px; background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; }
+.category-skill-info h4 { color: #0f172a; font-size: 16px; margin-bottom: 4px; }
+.category-skill-info p { color: #64748b; font-size: 13px; }
+.category-learn-btn { flex-shrink: 0; padding: 8px 12px; border-radius: 7px; background: #2563eb; color: #fff; text-decoration: none; font-size: 12px; font-weight: 700; }
+.close-category { display: block; margin: 20px auto 0; padding: 9px 16px; border-radius: 7px; background: #e2e8f0; color: #475569; font-size: 13px; font-weight: 700; }
+
+/* RESOURCES */
+.resources { padding: 80px 8%; background: #f8fafc; }
+.resource-container { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+.resource-card { padding: 25px; background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; transition: .3s; }
+.resource-card:hover { transform: translateY(-5px); border-color: #93c5fd; }
+.resource-icon { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; border-radius: 12px; background: #dbeafe; font-size: 20px; }
+.resource-card h3 { font-size: 18px; margin-bottom: 8px; color: #0f172a; }
+.resource-card p { min-height: 60px; color: #64748b; font-size: 14px; margin-bottom: 15px; }
+.resource-card a { text-decoration: none; color: #2563eb; font-size: 14px; font-weight: 700; }
+
+/* CAREER PATH */
+.career-path { padding: 80px 8%; background: #fff; }
+.path-container { max-width: 950px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.path-btn { min-height: 55px; padding: 12px 14px; border: 1px solid #cbd5e1; border-radius: 8px; background: #fff; color: #334155; font-weight: 700; }
+.path-btn:hover, .path-btn.active { background: #2563eb; color: #fff; border-color: #2563eb; }
+
+#pathResult { max-width: 750px; margin: 30px auto 0; padding: 25px; border-radius: 14px; background: #f8fafc; border: 1px solid #e2e8f0; color: #64748b; text-align: center; }
+.path-result-title { color: #0f172a; font-size: 22px; margin-bottom: 8px; }
+.path-result-description { margin-bottom: 20px; }
+.roadmap { display: grid; gap: 10px; }
+.roadmap-step { display: flex; align-items: center; gap: 15px; padding: 12px 15px; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; text-align: left; }
+.step-number { width: 28px; height: 28px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: #dbeafe; color: #2563eb; font-size: 13px; font-weight: 800; }
+
+/* CTA */
+.cta { padding: 70px 8%; text-align: center; background: #172033; color: #fff; }
+.cta h2 { font-size: 32px; margin-bottom: 12px; }
+.cta p { color: #cbd5e1; margin-bottom: 25px; }
+
+/* FOOTER */
+footer { padding: 35px 8%; text-align: center; background: #0f172a; color: #94a3b8; }
+.footer-logo { color: #fff; font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+footer p { margin: 4px 0; font-size: 13px; }
+
+/* COMING SOON POPUP */
+.coming-overlay-bg { position: fixed; inset: 0; background: rgba(15,23,42,.6); display: flex; align-items: center; justify-content: center; z-index: 2000; }
+.coming-box { background: #fff; padding: 28px; border-radius: 12px; text-align: center; max-width: 280px; }
+.coming-box h3 { color: #0f172a; margin-bottom: 8px; }
+.coming-box p { color: #64748b; margin-bottom: 18px; }
+.coming-box button { padding: 9px 18px; border-radius: 6px; background: #2563eb; color: #fff; font-weight: 700; }
+
+/* RESPONSIVE */
+@media (max-width: 1000px) {
+  .resource-container, .path-container { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 900px) {
+  .category-container { grid-template-columns: 1fr; }
+  .category-skills { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  header { flex-direction: column; gap: 15px; }
+  nav { flex-wrap: wrap; justify-content: center; }
+  .hero h1 { font-size: 38px; }
+  .resource-container, .path-container { grid-template-columns: 1fr; }
+  .category-skill { flex-direction: column; align-items: flex-start; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">NextStep</div>
+  <nav>
+   
+    <a href="jobs.html">Find Jobs</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero-content">
+    <span class="hero-tag">LEARN NEW SKILLS</span>
+    <h1>Learn skills that move your career forward.</h1>
+    <p>Explore technical skills, soft skills and career skills to help you grow and get ready for the job market.</p>
+    <button id="exploreBtn">Explore Skills</button>
+  </div>
+</section>
+
+<section class="categories">
+  <div class="section-title">
+    <span>WHAT DO YOU WANT TO LEARN?</span>
+    <h2>Skill Categories</h2>
+    <p>Pick a category to see the skills you can start learning today.</p>
+  </div>
+
+  <div class="category-container">
+    <div class="category-card">
+      <div class="category-icon">💻</div>
+      <h3>Technical Skills</h3>
+      <p>Practical digital skills used in many modern jobs.</p>
+      <button class="category-btn" data-category="technical">View Skills</button>
+    </div>
+    <div class="category-card">
+      <div class="category-icon">🤝</div>
+      <h3>Soft Skills</h3>
+      <p>Communicate and work better with others.</p>
+      <button class="category-btn" data-category="soft">View Skills</button>
+    </div>
+    <div class="category-card">
+      <div class="category-icon">🚀</div>
+      <h3>Career Skills</h3>
+      <p>Get ready for job applications and interviews.</p>
+      <button class="category-btn" data-category="career">View Skills</button>
+    </div>
+  </div>
+
+  <div id="categoryResult">
+    <p>Select a category to explore the skills you can learn.</p>
+  </div>
+</section>
+
+<section class="resources">
+  <div class="section-title">
+    <span>KEEP LEARNING</span>
+    <h2>Learning Resources</h2>
+    <p>Free places to start learning right away.</p>
+  </div>
+  <div class="resource-container">
+    <div class="resource-card">
+      <div class="resource-icon">🎓</div>
+      <h3>freeCodeCamp</h3>
+      <p>Free coding courses for web development and programming basics.</p>
+      <a href="https://www.freecodecamp.org/" target="_blank" rel="noopener noreferrer">Visit site →</a>
+    </div>
+    <div class="resource-card">
+      <div class="resource-icon">📚</div>
+      <h3>LinkedIn Learning</h3>
+      <p>Courses on soft skills, career skills and professional growth.</p>
+      <a href="https://www.linkedin.com/learning/" target="_blank" rel="noopener noreferrer">Visit site →</a>
+    </div>
+    <div class="resource-card">
+      <div class="resource-icon">🖥️</div>
+      <h3>YouTube Tutorials</h3>
+      <p>Free video lessons for almost any skill you want to learn.</p>
+      <a href="https://www.youtube.com/" target="_blank" rel="noopener noreferrer">Visit site →</a>
+    </div>
+    <div class="resource-card">
+      <div class="resource-icon">📝</div>
+      <h3>Practice Projects</h3>
+      <p>Build small projects to apply what you learn and grow your portfolio.</p>
+      <a href="#" target="_blank" rel="noopener noreferrer">Get ideas →</a>
+    </div>
+  </div>
+</section>
+
+<section class="career-path">
+  <div class="section-title">
+    <span>PLAN YOUR FUTURE</span>
+    <h2>Career Paths</h2>
+    <p>Pick a path to see a simple step-by-step roadmap.</p>
+  </div>
+
+  <div class="path-container">
+    <button class="path-btn" data-path="web">Web Development</button>
+    <button class="path-btn" data-path="mobile">Mobile Development</button>
+    <button class="path-btn" data-path="network">Networking</button>
+    <button class="path-btn" data-path="cyber">Cybersecurity</button>
+    <button class="path-btn" data-path="data">Data & AI</button>
+    <button class="path-btn" data-path="uiux">UI/UX Design</button>
+    <button class="path-btn" data-path="business">Business & Marketing</button>
+    <button class="path-btn" data-path="project">Project Management</button>
+  </div>
+
+  <div id="pathResult">
+    <p>Select a career path to see the roadmap.</p>
+  </div>
+</section>
+
+<section class="cta">
+  <h2>Ready to start learning?</h2>
+  <p>Pick a skill or career path and take your first step today.</p>
+  <button id="startBtn">Get Started</button>
+</section>
+
+<footer>
+  <div class="footer-logo">NextStep</div>
+  <p>Helping you learn the skills for your next opportunity.</p>
+  <p>&copy; 2026 NextStep. All rights reserved.</p>
+</footer>
+
+<script>
+// ===== EXPLORE BUTTON: scrolls down to the categories section =====
+const exploreBtn = document.getElementById("exploreBtn");
+if (exploreBtn) {
+  exploreBtn.addEventListener("click", function () {
+    document.querySelector(".categories").scrollIntoView({ behavior: "smooth" });
+  });
+}
+
+// ===== SKILL CATEGORY DATA =====
+const categories = {
+  technical: {
+    label: "TECHNICAL SKILLS",
+    title: "Technical Skills",
+    description: "Build practical digital skills that are useful across many modern jobs.",
+    skills: [
+      { name: "HTML", description: "Learn the structure of modern websites.", link: "https://www.freecodecamp.org/learn/" },
+      { name: "CSS", description: "Learn how to style websites and create responsive interfaces.", link: "https://www.freecodecamp.org/learn/" },
+      { name: "JavaScript", description: "Learn programming and create interactive websites.", link: "https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures-v8/" },
+      { name: "Git & GitHub", description: "Learn version control and manage your projects.", link: "https://www.freecodecamp.org/news/git-and-github-for-beginners/" },
+      { name: "Python", description: "Learn a popular programming language used in many fields.", link: "https://www.freecodecamp.org/learn/python-v9/" },
+      { name: "SQL", description: "Learn how to work with databases and data.", link: "https://www.freecodecamp.org/learn/relational-database/" }
+    ]
+  },
+  soft: {
+    label: "SOFT SKILLS",
+    title: "Soft Skills",
+    description: "Develop the workplace skills that help you communicate and work effectively with others.",
+    skills: [
+      { name: "Communication", description: "Learn how to communicate clearly and confidently.", link: "https://www.linkedin.com/learning/" },
+      { name: "Teamwork", description: "Learn how to collaborate effectively with a team.", link: "https://www.linkedin.com/learning/" },
+      { name: "Leadership", description: "Develop practical leadership and decision-making skills.", link: "https://www.linkedin.com/learning/" },
+      { name: "Time Management", description: "Learn how to prioritize tasks and manage your time.", link: "https://www.linkedin.com/learning/" },
+      { name: "Problem Solving", description: "Develop critical thinking and practical problem-solving skills.", link: "https://www.linkedin.com/learning/" },
+      { name: "Presentation Skills", description: "Learn how to present ideas clearly and confidently.", link: "https://www.linkedin.com/learning/" }
+    ]
+  },
+  career: {
+    label: "CAREER SKILLS",
+    title: "Career Skills",
+    description: "Prepare yourself for job applications, interviews and your first professional experience.",
+    skills: [
+      { name: "CV / Resume Writing", description: "Learn how to create a clear and professional resume.", link: "https://www.linkedin.com/learning/" },
+      { name: "Interview Skills", description: "Prepare for interviews and communicate your experience effectively.", link: "https://www.linkedin.com/learning/" },
+      { name: "LinkedIn", description: "Build a professional online presence.", link: "https://www.linkedin.com/learning/" },
+      { name: "Job Search", description: "Learn practical strategies for finding job opportunities.", link: "https://www.linkedin.com/learning/" },
+      { name: "Workplace Communication", description: "Improve your professional communication in the workplace.", link: "https://www.linkedin.com/learning/" },
+      { name: "Professional Networking", description: "Learn how to build useful professional connections.", link: "https://www.linkedin.com/learning/" }
+    ]
+  }
+};
+
+// ===== CATEGORY BUTTONS: show skills when a category is clicked =====
+const categoryButtons = document.querySelectorAll(".category-btn");
+const categoryResult = document.getElementById("categoryResult");
+
+categoryButtons.forEach(function (button) {
+  button.addEventListener("click", function () {
+    const categoryName = button.dataset.category;
+    const category = categories[categoryName];
+    if (!category) return;
+
+    // highlight the active button
+    categoryButtons.forEach(function (btn) { btn.classList.remove("active"); });
+    button.classList.add("active");
+
+    // build the list of skills as HTML text
+    let skillsHTML = "";
+    category.skills.forEach(function (skill) {
+      skillsHTML += `
+        <div class="category-skill">
+          <div class="category-skill-info">
+            <h4>${skill.name}</h4>
+            <p>${skill.description}</p>
+          </div>
+          <a href="${skill.link}" target="_blank" rel="noopener noreferrer" class="category-learn-btn">Start Learning →</a>
+        </div>
+      `;
+    });
+
+    categoryResult.innerHTML = `
+      <div class="category-result-header">
+        <span>${category.label}</span>
+        <h3>${category.title}</h3>
+        <p>${category.description}</p>
+      </div>
+      <div class="category-skills">${skillsHTML}</div>
+      <button class="close-category" id="closeCategory">Close</button>
+    `;
+
+    categoryResult.scrollIntoView({ behavior: "smooth", block: "center" });
+
+    document.getElementById("closeCategory").addEventListener("click", function () {
+      categoryResult.innerHTML = "<p>Select a category to explore the skills you can learn.</p>";
+      categoryButtons.forEach(function (btn) { btn.classList.remove("active"); });
+    });
+  });
+});
+
+// ===== CAREER PATH DATA =====
+const careerPaths = {
+  web: { title: "Web Development", description: "Learn how to build modern websites and web applications.", steps: ["HTML & Web Structure", "CSS & Responsive Design", "JavaScript", "Git & GitHub", "Projects & Portfolio"] },
+  mobile: { title: "Mobile Development", description: "Learn how to create applications for mobile devices.", steps: ["Programming Fundamentals", "Mobile UI Basics", "Flutter or React Native", "APIs & Data", "Build Mobile Projects"] },
+  network: { title: "Networking", description: "Build the foundation needed to work with computer networks.", steps: ["Networking Fundamentals", "OSI & TCP/IP", "IP Addressing & Subnetting", "Switching & VLANs", "Routing & Network Security"] },
+  cyber: { title: "Cybersecurity", description: "Learn the fundamentals of protecting systems, networks and data.", steps: ["Networking Fundamentals", "Linux Basics", "Security Fundamentals", "Threats & Vulnerabilities", "Security Tools & Practice"] },
+  data: { title: "Data & AI", description: "Learn how to work with data and explore modern AI technologies.", steps: ["Python Fundamentals", "Statistics Basics", "Data Analysis", "Machine Learning Fundamentals", "AI Projects"] },
+  uiux: { title: "UI/UX Design", description: "Learn how to design useful, accessible and user-friendly digital products.", steps: ["Design Fundamentals", "User Research", "Wireframes", "UI Design", "Prototypes & Portfolio"] },
+  business: { title: "Business & Marketing", description: "Build skills for business, marketing and customer-focused roles.", steps: ["Business Fundamentals", "Marketing Basics", "Customer Understanding", "Digital Marketing", "Business Projects"] },
+  project: { title: "Project Management", description: "Learn how to organize projects, teams, tasks and deadlines.", steps: ["Project Fundamentals", "Planning & Scheduling", "Team Management", "Risk Management", "Project Delivery"] }
+};
+
+// ===== CAREER PATH BUTTONS: show a roadmap when a path is clicked =====
+const pathButtons = document.querySelectorAll(".path-btn");
+const pathResult = document.getElementById("pathResult");
+
+pathButtons.forEach(function (button) {
+  button.addEventListener("click", function () {
+    const pathName = button.dataset.path;
+    const path = careerPaths[pathName];
+    if (!path) return;
+
+    pathButtons.forEach(function (btn) { btn.classList.remove("active"); });
+    button.classList.add("active");
+
+    let roadmapHTML = "";
+    path.steps.forEach(function (step, index) {
+      roadmapHTML += `
+        <div class="roadmap-step">
+          <span class="step-number">${index + 1}</span>
+          <span>${step}</span>
+        </div>
+      `;
+    });
+
+    pathResult.innerHTML = `
+      <h3 class="path-result-title">${path.title}</h3>
+      <p class="path-result-description">${path.description}</p>
+      <div class="roadmap">${roadmapHTML}</div>
+    `;
+
+    pathResult.scrollIntoView({ behavior: "smooth", block: "center" });
+  });
+});
+
+// ===== START LEARNING BUTTON (in the CTA section) =====
+const startBtn = document.getElementById("startBtn");
+if (startBtn) {
+  startBtn.addEventListener("click", function () {
+    document.querySelector(".categories").scrollIntoView({ behavior: "smooth" });
+  });
+}
+
+// ===== NAVIGATION LINKS =====
+const navLinks = document.querySelectorAll("nav a");
+
+navLinks.forEach(function (link) {
+  link.addEventListener("click", function (event) {
+    const text = link.textContent.trim();
+
+    if (text === "Home") {
+      event.preventDefault();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
+    if (text === "Learn Skills") {
+      event.preventDefault();
+      document.querySelector(".categories").scrollIntoView({ behavior: "smooth" });
+      return;
+    }
+
+    // any other link shows a "coming soon" popup instead of navigating
+    if (link.getAttribute("href") === "#") {
+      event.preventDefault();
+      showComingSoon(text);
+    }
+  });
+});
+
+// ===== "COMING SOON" POPUP =====
+function showComingSoon(pageName) {
+  const existing = document.querySelector(".coming-overlay");
+  if (existing) existing.remove();
+
+  const overlay = document.createElement("div");
+  overlay.className = "coming-overlay";
+
+  overlay.innerHTML = `
+    <div class="coming-overlay-bg">
+      <div class="coming-box">
+        <h3>${pageName}</h3>
+        <p>This section is coming soon.</p>
+        <button id="closeComing">Close</button>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(overlay);
+
+  document.getElementById("closeComing").addEventListener("click", function () {
+    overlay.remove();
+  });
+}
+</script>
+
+</body>
+</html>
