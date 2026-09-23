@@ -1,105 +1,598 @@
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
 <title>NextStep - Find Internships</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-body { background-color: #f7f9fc; color: #333; }
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Georgia, serif;
+}
+
+body {
+  background-color: #f6f7f5;
+  color: #1b2422;
+  line-height: 1.5;
+  transition: background-color .3s, color .3s;
+}
+
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar {
+  background-color: #fff;
+  border-bottom: 1px solid #dfe4e0;
+}
+
+.navbar .container {
+  width: 90%;
+  max-width: 1120px;
+  margin: auto;
+  padding: 18px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-family: Georgia, serif;
+  font-size: 24px;
+  font-weight: bold;
+  color: #1b2422;
+  text-decoration: none;
+}
+
+.logo span {
+  color: #c1622a;
+}
+
+.navbar nav a {
+  margin: 0 15px;
+  text-decoration: none;
+  color: #5c665f;
+  font-weight: 500;
+  transition: .2s;
+}
+
+.navbar nav a:hover,
+.navbar nav a.active {
+  color: #1b2422;
+  border-bottom: 2px solid #c1622a;
+  padding-bottom: 5px;
+}
+
+
+/* =========================
+   DARK MODE BUTTON
+========================= */
+
+#darkModeBtn {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  background-color: #e4eeeb;
+  color: #1b2422;
+  font-size: 18px;
+  cursor: pointer;
+  margin-left: 15px;
+  transition: .3s;
+}
+
+#darkModeBtn:hover {
+  transform: scale(1.08);
+}
+
+
+/* =========================
+   HERO
+========================= */
+
+.hero-section {
+  text-align: center;
+  padding: 60px 20px;
+  background-color: #fff;
+}
+
+.hero-section h1 {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 32px;
+  color: #1b2422;
+  margin-bottom: 10px;
+}
+
+.hero-section p {
+  color: #5c665f;
+  margin-bottom: 30px;
+}
+
+
+/* =========================
+   INTERNSHIPS
+========================= */
+
+.internships-section {
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.internships-section h2 {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 22px;
+  margin-bottom: 24px;
+  color: #1b2422;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+
+/* =========================
+   CARDS
+========================= */
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid #dfe4e0;
+  box-shadow: 0 2px 8px rgba(27, 36, 34, .04);
+  transition:
+    transform .2s,
+    box-shadow .2s,
+    border-color .2s,
+    background-color .3s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(27, 36, 34, .08);
+  border-color: #33665c;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+
+/* COMPANY LOGO */
+
+.company-logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.company-logo.blue {
+  background-color: #e4eeeb;
+  color: #33665c;
+}
+
+.company-logo.purple {
+  background-color: #f0e6ee;
+  color: #7a4870;
+}
+
+.company-logo.orange {
+  background-color: #fbe6d8;
+  color: #c1622a;
+}
+
+.company-logo.green {
+  background-color: #eaf0e3;
+  color: #5b7052;
+}
+
+
+/* BADGE */
+
+.badge {
+  background-color: #e4eeeb;
+  color: #33665c;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  border-radius: 20px;
+}
+
+
+/* CARD TEXT */
+
+.card h3 {
+  font-family: "Fraunces", Georgia, serif;
+  font-size: 18px;
+  color: #1b2422;
+}
+
+.company-name {
+  color: #5c665f;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 13px;
+  color: #5c665f;
+  margin-bottom: 12px;
+}
+
+.details i {
+  color: #5c665f;
+  margin-right: 4px;
+}
+
+.description {
+  font-size: 13px;
+  color: #5c665f;
+  line-height: 1.5;
+  margin-bottom: 16px;
+}
+
+
+/* TAGS */
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.tags span {
+  background-color: #f6f7f5;
+  color: #5c665f;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 1px solid #dfe4e0;
+}
+
+
+/* BUTTONS */
+
+.card-footer {
+  display: flex;
+  gap: 10px;
+}
+
+.btn-apply {
+  flex: 1;
+  background-color: #c1622a;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-apply:hover {
+  background-color: #9e4e20;
+}
+
+.btn-save {
+  background-color: #f6f7f5;
+  color: #5c665f;
+  border: 1px solid #dfe4e0;
+  padding: 10px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-save:hover {
+  background-color: #eef0ee;
+}
+
+.btn-save.saved {
+  background-color: #e4eeeb;
+  color: #33665c;
+  border-color: #33665c;
+}
+
+
+/* =========================
+   DARK MODE
+========================= */
+
+body.dark-mode {
+  background-color: #121212;
+  color: #eeeeee;
+}
+
 
 /* NAVBAR */
-.navbar { display: flex; justify-content: space-between; align-items: center; padding: 18px 50px; background-color: #fff; border-bottom: 1px solid #e2e8f0; }
-.logo { font-size: 24px; font-weight: bold; color: #1e3a8a; }
-.logo span { color: #2563eb; }
-.navbar nav a { margin: 0 15px; text-decoration: none; color: #4b5563; font-weight: 500; transition: .2s; }
-.navbar nav a:hover, .navbar nav a.active { color: #2563eb; border-bottom: 2px solid #2563eb; padding-bottom: 5px; }
-.auth-buttons .btn-login { background: none; border: none; padding: 8px 16px; cursor: pointer; font-weight: 600; color: #4b5563; }
-.auth-buttons .btn-start { background-color: #2563eb; color: #fff; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; transition: .3s; }
-.auth-buttons .btn-start:hover { background-color: #1d4ed8; }
+
+body.dark-mode .navbar {
+  background-color: #1e1e1e;
+  border-color: #333;
+}
+
+body.dark-mode .logo {
+  color: #ffffff;
+}
+
+body.dark-mode .navbar nav a {
+  color: #cccccc;
+}
+
+body.dark-mode .navbar nav a:hover,
+body.dark-mode .navbar nav a.active {
+  color: #ffffff;
+}
+
+body.dark-mode #darkModeBtn {
+  background-color: #333333;
+  color: #ffffff;
+}
+
 
 /* HERO */
-.hero-section { text-align: center; padding: 60px 20px; background-color: #fff; }
-.hero-section h1 { font-size: 32px; color: #0f172a; margin-bottom: 10px; }
-.hero-section p { color: #64748b; margin-bottom: 30px; }
 
-/* SEARCH BOX */
-.search-box { display: flex; justify-content: center; gap: 12px; max-width: 900px; margin: 0 auto; background: #fff; padding: 12px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,.08); border: 1px solid #e2e8f0; }
-.input-group { display: flex; align-items: center; background: #f8fafc; padding: 10px 14px; border-radius: 8px; flex: 1; border: 1px solid #cbd5e1; }
-.input-group i { color: #94a3b8; margin-right: 10px; }
-.input-group input, .input-group select { border: none; background: transparent; width: 100%; outline: none; font-size: 14px; }
-.btn-search { background-color: #2563eb; color: #fff; border: none; padding: 0 25px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: .2s; }
-.btn-search:hover { background-color: #1d4ed8; }
+body.dark-mode .hero-section {
+  background-color: #1a1a1a;
+}
 
-/* INTERNSHIPS GRID */
-.internships-section { max-width: 1100px; margin: 40px auto; padding: 0 20px; }
-.internships-section h2 { font-size: 22px; margin-bottom: 24px; color: #1e293b; }
-.grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+body.dark-mode .hero-section h1 {
+  color: #ffffff;
+}
 
-.card { background: #fff; border-radius: 12px; padding: 20px; border: 1px solid #e2e8f0; box-shadow: 0 2px 8px rgba(0,0,0,.04); transition: transform .2s, box-shadow .2s; }
-.card:hover { transform: translateY(-4px); box-shadow: 0 10px 20px rgba(0,0,0,.08); }
-.card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+body.dark-mode .hero-section p {
+  color: #cccccc;
+}
 
-.company-logo { width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; }
-.company-logo.blue { background-color: #e0f2fe; color: #0284c7; }
-.company-logo.purple { background-color: #f3e8ff; color: #9333ea; }
-.company-logo.orange { background-color: #ffedd5; color: #ea580c; }
-.company-logo.green { background-color: #dcfce7; color: #16a34a; }
 
-.badge { background-color: #e0e7ff; color: #3730a3; padding: 4px 10px; font-size: 12px; font-weight: 600; border-radius: 20px; }
+/* SECTION */
 
-.card h3 { font-size: 18px; color: #0f172a; }
-.company-name { color: #64748b; font-size: 14px; margin-bottom: 12px; }
+body.dark-mode .internships-section h2 {
+  color: #ffffff;
+}
 
-.details { display: flex; flex-wrap: wrap; gap: 12px; font-size: 13px; color: #475569; margin-bottom: 12px; }
-.details i { color: #64748b; margin-right: 4px; }
 
-.description { font-size: 13px; color: #64748b; line-height: 1.5; margin-bottom: 16px; }
+/* CARDS */
 
-.tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
-.tags span { background-color: #f1f5f9; color: #475569; font-size: 12px; padding: 4px 8px; border-radius: 4px; }
+body.dark-mode .card {
+  background-color: #242424;
+  border-color: #3a3a3a;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, .2);
+}
 
-.card-footer { display: flex; gap: 10px; }
-.btn-apply { flex: 1; background-color: #2563eb; color: #fff; border: none; padding: 10px; border-radius: 6px; font-weight: 600; cursor: pointer; }
-.btn-apply:hover { background-color: #1d4ed8; }
-.btn-save { background-color: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; padding: 10px 14px; border-radius: 6px; cursor: pointer; }
-.btn-save:hover { background-color: #e2e8f0; }
-.btn-save.saved { background-color: #dbeafe; color: #1d4ed8; border-color: #93c5fd; }
+body.dark-mode .card h3 {
+  color: #ffffff;
+}
+
+body.dark-mode .company-name,
+body.dark-mode .details,
+body.dark-mode .description {
+  color: #cccccc;
+}
+
+body.dark-mode .details i {
+  color: #cccccc;
+}
+
+
+/* TAGS */
+
+body.dark-mode .tags span {
+  background-color: #333333;
+  color: #cccccc;
+  border-color: #444444;
+}
+
+
+/* SAVE BUTTON */
+
+body.dark-mode .btn-save {
+  background-color: #333333;
+  color: #cccccc;
+  border-color: #444444;
+}
+
+body.dark-mode .btn-save:hover {
+  background-color: #444444;
+}
+
+body.dark-mode .btn-save.saved {
+  background-color: #30453f;
+  color: #9ed1c3;
+  border-color: #33665c;
+}
+
+
+/* COMPANY LOGOS */
+
+body.dark-mode .company-logo.blue {
+  background-color: #30453f;
+}
+
+body.dark-mode .company-logo.purple {
+  background-color: #3d2d3b;
+}
+
+body.dark-mode .company-logo.orange {
+  background-color: #4a3022;
+}
+
+body.dark-mode .company-logo.green {
+  background-color: #303b2c;
+}
+
+
+/* BADGE */
+
+body.dark-mode .badge {
+  background-color: #30453f;
+  color: #a9d5c8;
+}
+
 
 /* RESPONSIVE */
+
 @media (max-width: 768px) {
-  .search-box { flex-direction: column; }
-  .navbar nav { display: none; }
+
+  .search-box {
+    flex-direction: column;
+  }
+
+  .navbar nav {
+    display: none;
+  }
+
+  #darkModeBtn {
+    margin-left: 0;
+  }
+
 }
+
 </style>
 </head>
+
+
 <body>
 
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
 <header class="navbar">
-  <div class="logo">Next<span>Step</span></div>
-  <nav>
-   
-    <a href="#" class="active">Find Internships</a>
-    
-   
-  </nav>
-  
+
+  <div class="container">
+
+    <a class="logo" href="index.html">
+      Next<span>Step</span>
+    </a>
+
+    <nav>
+
+      <a href="skills.html">
+        Learn Skills
+      </a>
+
+      <a href="internships.html" class="active">
+        Find Internships
+      </a>
+
+      <a href="cv.html">
+        Build Your CV
+      </a>
+
+      <a href="jobs.html">
+        Find Jobs
+      </a>
+
+    </nav>
+
+    <!-- DARK MODE -->
+    <button id="darkModeBtn">
+      🌙
+    </button>
+
+  </div>
+
 </header>
 
+
+<!-- =========================
+     HERO
+========================= -->
+
 <section class="hero-section">
-  <h1>Internship Opportunities for Next-Gen Leaders</h1>
-  <p>Find hands-on experience, build your network, and launch your career.</p>
+
+  <h1>
+    Internship Opportunities for Next-Gen Leaders
+  </h1>
+
+  <p>
+    Find hands-on experience, build your network, and launch your career.
+  </p>
+
 </section>
+
+
+<!-- =========================
+     INTERNSHIPS
+========================= -->
 
 <section class="internships-section">
-  <h2>Available Internships</h2>
-  <div class="grid-container" id="internship-list"></div>
+
+  <h2>
+    Available Internships
+  </h2>
+
+  <div
+    class="grid-container"
+    id="internship-list">
+  </div>
+
 </section>
 
+
 <script>
-// ===== INTERNSHIP DATA =====
+
+
+// =========================
+// DARK MODE
+// =========================
+
+const darkModeBtn =
+  document.getElementById("darkModeBtn");
+
+
+darkModeBtn.addEventListener("click", function () {
+
+  document.body.classList.toggle("dark-mode");
+
+
+  if (
+    document.body.classList.contains("dark-mode")
+  ) {
+
+    darkModeBtn.textContent = "☀️";
+
+  } else {
+
+    darkModeBtn.textContent = "🌙";
+
+  }
+
+});
+
+
+
+// =========================
+// INTERNSHIP DATA
+// =========================
+
 const internships = [
+
   {
     title: "Frontend Developer Intern",
     company: "TechCorp Solutions",
@@ -109,9 +602,16 @@ const internships = [
     type: "Remote",
     logoo: "fa-solid fa-code",
     logoColor: "blue",
-    description: "Join our product team to build modern user interfaces.",
-    tags: ["React", "JavaScript", "HTML/CSS"]
+    description:
+      "Join our product team to build modern user interfaces.",
+    tags: [
+      "React",
+      "JavaScript",
+      "HTML/CSS"
+    ]
   },
+
+
   {
     title: "UI/UX Design Intern",
     company: "Creative Studio",
@@ -121,9 +621,16 @@ const internships = [
     type: "On-site",
     logoo: "fa-solid fa-paint-brush",
     logoColor: "purple",
-    description: "Design wireframes and interactive prototypes.",
-    tags: ["Figma", "UI/UX", "Wireframing"]
+    description:
+      "Design wireframes and interactive prototypes.",
+    tags: [
+      "Figma",
+      "UI/UX",
+      "Wireframing"
+    ]
   },
+
+
   {
     title: "Content Creator Intern",
     company: "Media Hub",
@@ -133,9 +640,16 @@ const internships = [
     type: "Hybrid",
     logoo: "fa-regular fa-bookmark",
     logoColor: "orange",
-    description: "Create engaging content, organize digital materials, and help manage online content.",
-    tags: ["Content Writing", "Social Media", "Canva"]
+    description:
+      "Create engaging content, organize digital materials, and help manage online content.",
+    tags: [
+      "Content Writing",
+      "Social Media",
+      "Canva"
+    ]
   },
+
+
   {
     title: "Digital Marketing Intern",
     company: "Growth Agency",
@@ -145,72 +659,170 @@ const internships = [
     type: "Hybrid",
     logoo: "fa-solid fa-chart-line",
     logoColor: "green",
-    description: "Work on marketing campaigns, SEO, social media, and analyze campaign performance.",
-    tags: ["SEO", "Marketing", "Analytics"]
+    description:
+      "Work on marketing campaigns, SEO, social media, and analyze campaign performance.",
+    tags: [
+      "SEO",
+      "Marketing",
+      "Analytics"
+    ]
   }
+
 ];
 
-// ===== RENDER THE INTERNSHIP CARDS =====
-const list = document.getElementById("internship-list");
+
+
+// =========================
+// RENDER INTERNSHIP CARDS
+// =========================
+
+const list =
+  document.getElementById("internship-list");
+
 
 function renderInternships() {
+
   let cardsHTML = "";
 
+
   internships.forEach(function (job) {
+
     let tagsHTML = "";
+
+
     job.tags.forEach(function (tag) {
-      tagsHTML += `<span>${tag}</span>`;
+
+      tagsHTML += `
+        <span>${tag}</span>
+      `;
+
     });
 
+
     cardsHTML += `
+
       <div class="card">
+
         <div class="card-header">
+
           <div class="company-logo ${job.logoColor}">
+
             <i class="${job.logoo}"></i>
+
           </div>
-          <span class="badge">${job.type}</span>
+
+          <span class="badge">
+            ${job.type}
+          </span>
+
         </div>
 
-        <h3>${job.title}</h3>
-        <p class="company-name">${job.company}</p>
+
+        <h3>
+          ${job.title}
+        </h3>
+
+
+        <p class="company-name">
+          ${job.company}
+        </p>
+
 
         <div class="details">
-          <span><i class="fa-solid fa-location-dot"></i>${job.location}</span>
-          <span><i class="fa-solid fa-clock"></i>${job.duration}</span>
-          <span><i class="fa-solid fa-sack-dollar"></i>${job.salary}</span>
+
+          <span>
+            <i class="fa-solid fa-location-dot"></i>
+            ${job.location}
+          </span>
+
+          <span>
+            <i class="fa-solid fa-clock"></i>
+            ${job.duration}
+          </span>
+
+          <span>
+            <i class="fa-solid fa-sack-dollar"></i>
+            ${job.salary}
+          </span>
+
         </div>
 
-        <p class="description">${job.description}</p>
 
-        <div class="tags">${tagsHTML}</div>
+        <p class="description">
+          ${job.description}
+        </p>
+
+
+        <div class="tags">
+          ${tagsHTML}
+        </div>
+
 
         <div class="card-footer">
-          <button class="btn-apply">Apply Now</button>
-          <button class="btn-save"><i class="fa-regular fa-bookmark"></i></button>
+
+          <button class="btn-apply">
+            Apply Now
+          </button>
+
+          <button class="btn-save">
+
+            <i class="fa-regular fa-bookmark"></i>
+
+          </button>
+
         </div>
+
       </div>
+
     `;
+
   });
+
 
   list.innerHTML = cardsHTML;
 
-  // Apply button
-  document.querySelectorAll(".btn-apply").forEach(function (button) {
-    button.addEventListener("click", function () {
-      alert("Application feature can be connected to your backend later.");
-    });
-  });
 
-  // Save button (toggle saved state)
-  document.querySelectorAll(".btn-save").forEach(function (button) {
-    button.addEventListener("click", function () {
-      button.classList.toggle("saved");
+
+  // APPLY BUTTON
+
+  document
+    .querySelectorAll(".btn-apply")
+    .forEach(function (button) {
+
+      button.addEventListener("click", function () {
+
+        alert(
+          "Application feature can be connected to your backend later."
+        );
+
+      });
+
     });
-  });
+
+
+
+  // SAVE BUTTON
+
+  document
+    .querySelectorAll(".btn-save")
+    .forEach(function (button) {
+
+      button.addEventListener("click", function () {
+
+        button.classList.toggle("saved");
+
+      });
+
+    });
+
 }
 
+
 renderInternships();
+
 </script>
+
 
 </body>
 </html>
+```
